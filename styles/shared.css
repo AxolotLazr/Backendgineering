@@ -1,0 +1,30 @@
+:root {
+    --gap: 4px;
+    --blur: 8px;
+}
+body {
+    position: fixed;
+    left: 0px;
+    right: 0px;
+    top: 0px;
+    bottom: 0px;
+    background-color: var(--dark0);
+}
+#edgeHighlight {
+    z-index: 100;
+
+    position: fixed;
+    left: 0px;
+    right: 0px;
+    top: 0px;
+    bottom: 0px;
+
+    margin: 0px;
+    padding: 0px;
+
+    box-shadow: inset 0px 0px 0.5vh 0.2vh var(--highlight2), inset 0px 0px 2vh 1vh var(--highlight1);
+}
+
+#dataSheet {
+
+}
