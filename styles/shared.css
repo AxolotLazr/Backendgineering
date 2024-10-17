@@ -10,7 +10,7 @@ body {
     right: 0px;
     top: 0px;
     bottom: 0px;
-    background-color: rgb(0,0,0);
+    background-color: var(--dark0);
 
     margin: 6vmin;
     padding: 0px;
@@ -31,10 +31,6 @@ body {
 
     margin: 0px;
     padding: 0px;
-
-    border-radius: 4vmax;
-
-    box-shadow: inset 0px 0px 0vmin 0.2vmin var(--highlight2), inset 0px 0px 2vmin 0vmin var(--highlight1), inset 0px 0px 5vmin 0vmin var(--highlight3), 0px 0px 1vmin var(--highlight1), 0px 0px 5vmin var(--highlight3);
 }
 
 #world {
@@ -44,9 +40,16 @@ body {
     top: 0px;
     bottom: 0px;
     background-color: var(--dark1);
-
-    border-radius: 4vmax;
 }
 #dataSheet {
 
+}
+
+.glow {
+    border-style: solid;
+    border-radius: 4vmax;
+    border-width: 0.4vmin;
+    border-color: var(--highlight2);
+    
+    box-shadow: inset 0px 0px 2vmin var(--highlight1), 0px 0px 2vmin var(--highlight1), inset 0px 0px 5vmin var(--highlight3), 0px 0px 5vmin var(--highlight3);
 }

@@ -1,0 +1,15 @@
+{
+    "name": "Backendgineering",
+    "short_name": "Back...ing",
+    "description": "A website for learning visual design.",
+
+    "categories": ["factory", "game", "engineering"],
+
+    "display": "standalone",
+    "orientation": "portrait",
+    
+    "start_url": "https://axolotlazr.github.io/Backendgineering",
+
+    "background_color": "rgb(0,0,8)",
+    "theme_color": "rgb(0,0,8)"
+}
