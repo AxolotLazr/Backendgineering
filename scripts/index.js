@@ -2,8 +2,16 @@ let root = document.querySelector(':root');
 
 let browser = getBrowser();
 let browserTheme = getBrowserTheme();
+
+let currentVersion = '0.0.3';
+
 console.log('Browser Prediction: ' + browser);
 console.log('Browser Theme Prediction: ' + browserTheme);
+
+console.log('App version estimation: ' + currentVersion)
+document.getElementById('versionDisplay').innerText = '~V'+currentVersion;
+
+// root.style.setProperty('text-shadow', '0px 0px 0.4vmin var(--highlight0)' + ', 0px 0px 1vmin var(--highlight1)'.repeat(3) + ', 0px 0px 3vmin var(--highlight3)'.repeat(6))
 
 function getBrowser () {
     if ((!!window.opr && !!opr.addons) || !!window.opera || navigator.userAgent.indexOf(' OPR/') >= 0){

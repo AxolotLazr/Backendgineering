@@ -2,8 +2,11 @@
     --dark0: rgb(0,0,8);
     --dark1: rgb(16,16,24);
     --dark2: rgb(24,24,32);
+
     --highlight0: rgb(255,255,255);
     --highlight1: rgb(255,112,0);
     --highlight2: rgb(255,208,96);
     --highlight3: rgb(128,32,24);
+
+    --overlay1: ;
 }
