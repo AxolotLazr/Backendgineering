@@ -1,0 +1,14 @@
+MACHINE!
+name(T1 Burner);
+class(burner, t1);
+daisy(false);
+intake[
+    type(flammable),
+    i/m(30),
+    internal storage(100)
+];
+output[
+    name(electricity),
+    i/m(50MW),
+    internal storage(0)
+];
