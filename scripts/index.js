@@ -18,10 +18,10 @@ document.getElementById('versionDisplay').innerText = '~V'+currentVersion;
 
 // root.style.setProperty('text-shadow', '0px 0px 0.4vmin var(--highlight0)' + ', 0px 0px 1vmin var(--highlight1)'.repeat(3) + ', 0px 0px 3vmin var(--highlight3)'.repeat(6))
 
-fetch("../resources/base/burner.txt")
+fetch("../resources")
     .then((res) => res.text())
     .then((text) => {
-        console.log(text);
+        console.log(text.split(/\r?\n|\r|\n/g));
     })
     .catch((e) => console.error(e));
 

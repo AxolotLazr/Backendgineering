@@ -1,14 +1,19 @@
 MACHINE!
 name(T1 Burner);
 class(burner, t1);
-daisy(false);
+daisy chain(false);
+efficiancy(0.8);
 intake[
+    connection(belt),
     type(flammable),
     i/m(30),
     internal storage(100)
 ];
 output[
-    name(electricity),
-    i/m(50MW),
+    connection(wire),
     internal storage(0)
 ];
+output[
+    connection(vent),
+    internal storage(0)
+]

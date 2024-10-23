@@ -1,0 +1,15 @@
+COMPONENT!
+name(coal);
+class(flammable, solid);
+conversion[
+    name(burn),
+    intake amount(1),
+    output item(Joule),
+    output amount(8671500000)
+];
+conversion[
+    name(burn),
+    intake amount(1),
+    output item(pollution),
+    output amount(1.85353535354)
+]
