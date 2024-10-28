@@ -2,9 +2,14 @@
     --clear: rgb(0,0,0,0);
 
     --gap: 4px;
+    --wayOutGap: 6vmin;
     --blur: 8px;
+    --wayOutBlurSmall: 2vmin;
+    --wayOutBlurLarge: 5vmin;
 
     --borderRadius: 16px;
+    --wayOutborderRadius: 4vmax;
+    --wayOutBorderWidth: 0.4vmin;
 
     color: var(--highlight0);
     font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
@@ -56,23 +61,82 @@ body {
     bottom: 8px;
 }
 
-#world {
+#viewSpaceHolder {
+    z-index: 10;
+    display: flex;
+    flex-direction: column;
+    gap: var(--wayOutGap);
+
+    position: fixed;
+    left: 0px;
+    right: 0px;
+    top: 0px;
+    bottom: 0px;
+
+    padding: var(--wayOutGap);
+
+    > * {
+        display: flex;
+        flex-grow: 0;
+        flex-direction: row;
+        gap: var(--wayOutGap);
+
+        position: relative;
+
+        > * {
+            display: flex;
+            flex-grow: 0;
+    
+            position: relative;
+        }
+    }
+}
+
+#viewport {
+    z-index: 1;
+    order: 1;
+
     position: absolute;
     left: 0px;
     right: 0px;
     top: 0px;
     bottom: 0px;
     background-color: var(--dark1);
-}
-#dataSheet {
 
+    transition: all 0.2s ease-in-out;
+}
+#infoport {
+    z-index: 2;
+    order: 2;
+
+    position: absolute;
+    left: 0px;
+    right: 0px;
+    top: 0px;
+    bottom: 0px;
+    background-color: var(--dark1);
+
+    transition: all 0.2s ease-in-out;
+}
+#AGUIport {
+    z-index: 2;
+    order: 2;
+
+    position: absolute;
+    left: 0px;
+    right: 0px;
+    top: 0px;
+    bottom: 0px;
+    background-color: var(--dark1);
+
+    transition: all 0.2s ease-in-out;
 }
 
 .glow {
     border-style: solid;
-    border-radius: 4vmax;
-    border-width: 0.4vmin;
+    border-radius: var(--wayOutborderRadius);
+    border-width: var(--wayOutBorderWidth);
     border-color: var(--highlight2);
     
-    box-shadow: inset 0px 0px 2vmin var(--highlight1), 0px 0px 2vmin var(--highlight1), inset 0px 0px 5vmin var(--highlight3), 0px 0px 5vmin var(--highlight3);
+    box-shadow: inset 0px 0px var(--wayOutBlurSmall) var(--highlight1), 0px 0px var(--wayOutBlurSmall) var(--highlight1), inset 0px 0px var(--wayOutBlurLarge) var(--highlight3), 0px 0px var(--wayOutBlurLarge) var(--highlight3);
 }

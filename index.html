@@ -4,14 +4,33 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Backendgineering</title>
-        <link rel="stylesheet" href="styles/default-skin.css">
+        <link rel="stylesheet" href="styles/orange-skin.css">
         <link rel="stylesheet" href="styles/shared.css">
         <link rel="icon" type="image/x-icon" href="images/logos/logo.png">
     </head>
     <body>
-        <div id="world" class="glow" ></div>
-        <div id="dataSheet"></div>
-        <div id="versionHolder"><div id="versionDisplay"></div></div>
+        <div id="viewSpaceHolder">
+            <div class="row">
+                <div class="collumn"></div>
+                <div class="collumn"></div>
+                <div class="collumn"></div>
+            </div>
+            <div class="row">
+                <div class="collumn"></div>
+                <div class="collumn"></div>
+                <div class="collumn"></div>
+            </div>
+            <div class="row">
+                <div class="collumn"></div>
+                <div class="collumn"></div>
+                <div class="collumn"></div>
+            </div>
+        </div>
+        <div id="viewport" class="window glow"></div>
+        <div id="infoport" class="window glow open"></div>
+        <div id="AGUIport" class="window glow open"></div>
+        <div id="versport"><div id="versionDisplay"></div></div>
     </body>
-    <script src="scripts/index.js"></script>
+    <script id="theGame" src="scripts/game.js"></script>
+    <script id="theVisualisation" src="scripts/index.js"></script>
 </html>

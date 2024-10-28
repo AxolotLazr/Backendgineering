@@ -1,55 +1,47 @@
-let root = document.querySelector(':root');
+let viewport = document.getElementById('viewport');
+print('Got viewport')
+let infoport = document.getElementById('infoport');
+print('Got infoport')
+let AGUIport = document.getElementById('AGUIport');
+print('Got AGUIport')
 
-// browser theme
-let browser = getBrowser();
-console.log('Browser Prediction: ' + browser);
-let browserTheme = getBrowserTheme();
-console.log('Browser Theme Prediction: ' + browserTheme);
-
-// version
-let currentVersion = '0.0.3';
-console.log('App version estimation: ' + currentVersion);
-
-// calculations
-let liquidLoss = gall_to_M3(1000000000000)/4000000000000;
-console.log('Liquid loss: ' + liquidLoss);
+let rowsUsed = '';
+let collumnsUsed = '';
 
 document.getElementById('versionDisplay').innerText = '~V'+currentVersion;
 
-// root.style.setProperty('text-shadow', '0px 0px 0.4vmin var(--highlight0)' + ', 0px 0px 1vmin var(--highlight1)'.repeat(3) + ', 0px 0px 3vmin var(--highlight3)'.repeat(6))
+assignWindow(viewport, 2, 2, true);
+assignWindow(infoport, 2, 3, false);
+assignWindow(AGUIport, 3, 2, false);
 
-fetch("../resources")
-    .then((res) => res.text())
-    .then((text) => {
-        console.log(text.split(/\r?\n|\r|\n/g));
-    })
-    .catch((e) => console.error(e));
+// useful functions
+function assignWindow(object, row, collumn, open) {
+    rowsUsed = rowsUsed + (row - 1);
+    collumnsUsed = collumnsUsed + (collumn - 1);
 
-function getBrowser () {
-    if ((!!window.opr && !!opr.addons) || !!window.opera || navigator.userAgent.indexOf(' OPR/') >= 0){
-        return 'Opera';
-    } else if (typeof InstallTrigger !== 'undefined') {
-        return 'Firefox';
-    } else if (/constructor/i.test(window.HTMLElement) || (function (p) { return p.toString() === "[object SafariRemoteNotification]"; })(!window['safari'] || (typeof safari !== 'undefined' && window['safari'].pushNotification))) {
-        return 'Safari';
-    } else if (/*@cc_on!@*/false || !!document.documentMode) {
-        return 'Internet Explorer';
-    } else if ((!(/*@cc_on!@*/false || (!!document.documentMode) && !!window.StyleMedia)) || ((!!window.chrome && (!!window.chrome.webstore || !!window.chrome.runtime)) && (navigator.userAgent.indexOf("Edg") != -1))) {
-        return 'Microsoft Edge';
-    } else if (!!window.chrome && (!!window.chrome.webstore || !!window.chrome.runtime)) {
-        return 'Google Chrome';
-    } else {
-        return 'unknown';
+    let rows = document.getElementsByClassName('row');
+
+    for (i = 0; i < rows.length; i++){
+        if (rowsUsed.includes(i)){
+            if (rowsUsed.includes(i)){
+                if (open){
+                    rows[i].style.flexGrow = 1
+                } else {
+                    if (i == 1){rows[i].style.flexGrow = 1} else {rows[i].style.height = 'var(--wayOutGap)'}
+                }
+            }
+        }
+        let collumns = rows[i].getElementsByClassName('collumn');
+        for (i2 = 0; i2 < collumns.length; i2++){
+            if (collumnsUsed.includes(i2)){
+                if (open){
+                    collumns[i2].style.flexGrow = 1
+                } else {
+                    if (i2 == 1){collumns[i2].style.flexGrow = 1} else {collumns[i2].style.width = 'var(--wayOutGap)'}
+                }
+            }
+        }
     }
-}
-function getBrowserTheme () {
-    if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-        return 'dark';
-    } else {
-        return 'light';
-    }
-}
 
-function gall_to_M3(input){
-    return(input/264.2)
+    rows[row - 1].getElementsByClassName('collumn')[collumn - 1].appendChild(object);
 }
