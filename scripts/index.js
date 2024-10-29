@@ -1,3 +1,5 @@
+let windowHolder = document.getElementById('viewSpaceHolder');
+print('Got windowHolder');
 let viewport = document.getElementById('viewport');
 print('Got viewport')
 let infoport = document.getElementById('infoport');
@@ -5,43 +7,59 @@ print('Got infoport')
 let AGUIport = document.getElementById('AGUIport');
 print('Got AGUIport')
 
-let rowsUsed = '';
-let collumnsUsed = '';
+let windows = [];
+print('Made "windows" variable');
 
 document.getElementById('versionDisplay').innerText = '~V'+currentVersion;
+print('Set the version display')
 
-assignWindow(viewport, 2, 2, true);
-assignWindow(infoport, 2, 3, false);
-assignWindow(AGUIport, 3, 2, false);
+assignWindow(viewport, 0, 0, true);
+assignWindow(infoport, 1, 0, false);
+assignWindow(AGUIport, 0, 1, false);
+
+updateWindows();
 
 // useful functions
-function assignWindow(object, row, collumn, open) {
-    rowsUsed = rowsUsed + (row - 1);
-    collumnsUsed = collumnsUsed + (collumn - 1);
+function assignWindow(object, collumn, row, open) {
+    object.classList.remove("open");
+    if(open){object.classList.add("open")};
+    
+    windows.push([object, collumn, row, open]);
+    print(windows);
+}
+function updateWindows() {
+    windowHolder.innerHTML = '';
 
-    let rows = document.getElementsByClassName('row');
-
-    for (i = 0; i < rows.length; i++){
-        if (rowsUsed.includes(i)){
-            if (rowsUsed.includes(i)){
-                if (open){
-                    rows[i].style.flexGrow = 1
-                } else {
-                    if (i == 1){rows[i].style.flexGrow = 1} else {rows[i].style.height = 'var(--wayOutGap)'}
-                }
-            }
-        }
-        let collumns = rows[i].getElementsByClassName('collumn');
-        for (i2 = 0; i2 < collumns.length; i2++){
-            if (collumnsUsed.includes(i2)){
-                if (open){
-                    collumns[i2].style.flexGrow = 1
-                } else {
-                    if (i2 == 1){collumns[i2].style.flexGrow = 1} else {collumns[i2].style.width = 'var(--wayOutGap)'}
-                }
-            }
-        }
+    let collumnsUsed = [];
+    let rowsUsed = [];
+    for (i = 0; i < windows.length; i++) {
+        collumnsUsed.push(windows[i][1]);
+    }
+    for (i = 0; i < windows.length; i++) {
+        rowsUsed.push(windows[i][2]);
+    }
+    let minCollumn = Math.min.apply(Math, collumnsUsed);
+    let minRow = Math.min.apply(Math, rowsUsed);
+    let maxCollumn = Math.max.apply(Math, collumnsUsed);
+    let maxRow = Math.max.apply(Math, rowsUsed);
+    for (i = 0; i < collumnsUsed.length; i++) {
+        collumnsUsed[i] = collumnsUsed[i] - minCollumn;
+    }
+    for (i = 0; i < rowsUsed.length; i++) {
+        rowsUsed[i] = rowsUsed[i] - minRow;
     }
 
-    rows[row - 1].getElementsByClassName('collumn')[collumn - 1].appendChild(object);
+    for (i = minRow; i <= maxRow; i++) {
+        let newRow = document.createElement('span');
+        newRow.classList = 'row';
+        for (i2 = minCollumn; i2 <= maxCollumn; i2++) {
+            let newCollumn = document.createElement('span');
+            newCollumn.classList = 'collumn';
+            newRow.appendChild(newCollumn);
+        }
+        windowHolder.appendChild(newRow);
+    }
+    for (i = 0; i < windows.length; i++) {
+        document.getElementsByClassName('row')[rowsUsed[i]].getElementsByClassName('collumn')[collumnsUsed[i]].appendChild(windows[i][0]);
+    }
 }

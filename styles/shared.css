@@ -75,19 +75,28 @@ body {
 
     padding: var(--wayOutGap);
 
-    > * {
+    .row {
         display: flex;
-        flex-grow: 0;
         flex-direction: row;
         gap: var(--wayOutGap);
 
         position: relative;
+        height: var(--wayOutGap);
 
-        > * {
-            display: flex;
-            flex-grow: 0;
-    
-            position: relative;
+        &:has(.open) {
+            flex-grow: 1;
+        }
+        &:not(:has(.open)) > :has(.window) {
+            flex-grow: 1;
+        }
+    }
+    .collumn {
+        display: flex;
+        
+        position: relative;
+        width: var(--wayOutGap);
+        &:has(.open) {
+            flex-grow: 1;
         }
     }
 }
