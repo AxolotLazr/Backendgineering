@@ -7,11 +7,13 @@
     --wayOutBlurSmall: 2vmin;
     --wayOutBlurLarge: 5vmin;
 
+    --drop: 8px;
+
     --borderRadius: 16px;
     --wayOutborderRadius: 4vmax;
     --wayOutBorderWidth: 0.4vmin;
 
-    color: var(--highlight0);
+    color: var(--glow0);
     font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
 }
 body {
@@ -20,7 +22,7 @@ body {
     right: 0px;
     top: 0px;
     bottom: 0px;
-    background-color: var(--dark0);
+    background-color: var(--background1);
 
     margin: 6vmin;
     padding: 0px;
@@ -31,38 +33,8 @@ body {
     }
 }
 
-#versionHolder {
-    position: fixed;
-    right: 0px;
-    bottom: 0px;
-    width: calc(12vmin + 2vmax);
-    height: calc(6vmin + 2vmax);
-    background-image: radial-gradient(ellipse at bottom right, var(--highlight1) 0%, var(--highlight3) 20%, var(--clear) 70%);
-
-    border-radius: 100% 0px 0px 0px;
-
-    transition: all 0.2s ease-in-out;
-}
-#versionDisplay {
-    opacity: 0%;
-
-    position: absolute;
-    right: -100%;
-    bottom: -100%;
-
-    font-size: 24px;
-
-    transition: all 0.2s ease-in-out;
-}
-#versionHolder:hover > #versionDisplay{
-    opacity: 100%;
-
-    right: 8px;
-    bottom: 8px;
-}
-
 #viewSpaceHolder {
-    z-index: 10;
+    z-index: 0;
     display: flex;
     flex-direction: column;
     gap: var(--wayOutGap);
@@ -81,27 +53,34 @@ body {
         gap: var(--wayOutGap);
 
         position: relative;
-        height: var(--wayOutGap);
-
-        &:has(.open) {
-            flex-grow: 1;
-        }
-        &:not(:has(.open)) > :has(.window) {
-            flex-grow: 1;
-        }
+        width: 100%;
+        min-height: var(--wayOutGap);
     }
     .collumn {
         display: flex;
         
         position: relative;
-        width: var(--wayOutGap);
-        &:has(.open) {
-            flex-grow: 1;
-        }
+        min-width: var(--wayOutGap);
+        height: 100%;
     }
 }
+#versport {
+    display: flex;
+    align-items: center;
+    place-content: center;
 
-#viewport {
+    position: relative;
+    min-width: calc(2*var(--wayOutGap));
+}
+#versionDisplay {
+    font-size: large;
+}
+
+#testLayering {
+    margin: calc(3*var(--wayOutGap));
+}
+
+.window {
     z-index: 1;
     order: 1;
 
@@ -110,42 +89,27 @@ body {
     right: 0px;
     top: 0px;
     bottom: 0px;
-    background-color: var(--dark1);
+    background-color: var(--background2);
+
+    border-radius: var(--wayOutborderRadius);
 
     transition: all 0.2s ease-in-out;
 }
-#infoport {
-    z-index: 2;
-    order: 2;
+.glass {
+    background-color: var(--background2P);
 
-    position: absolute;
-    left: 0px;
-    right: 0px;
-    top: 0px;
-    bottom: 0px;
-    background-color: var(--dark1);
+    border-style: solid;
+    border-width: 1px;
+    border-color: var(--highlight0P);
 
-    transition: all 0.2s ease-in-out;
+    backdrop-filter: brightness(120%) contrast(110%) blur(2vmin);
+
+    box-shadow: 0px var(--drop) var(--blur) var(--shadow1P);
 }
-#AGUIport {
-    z-index: 2;
-    order: 2;
-
-    position: absolute;
-    left: 0px;
-    right: 0px;
-    top: 0px;
-    bottom: 0px;
-    background-color: var(--dark1);
-
-    transition: all 0.2s ease-in-out;
-}
-
 .glow {
     border-style: solid;
-    border-radius: var(--wayOutborderRadius);
     border-width: var(--wayOutBorderWidth);
-    border-color: var(--highlight2);
+    border-color: var(--glow1);
     
-    box-shadow: inset 0px 0px var(--wayOutBlurSmall) var(--highlight1), 0px 0px var(--wayOutBlurSmall) var(--highlight1), inset 0px 0px var(--wayOutBlurLarge) var(--highlight3), 0px 0px var(--wayOutBlurLarge) var(--highlight3);
+    box-shadow: inset 0px 0px var(--wayOutBlurSmall) var(--glow2), 0px 0px var(--wayOutBlurSmall) var(--glow2), inset 0px 0px var(--wayOutBlurLarge) var(--glow3), 0px 0px var(--wayOutBlurLarge) var(--glow3);
 }
