@@ -52,12 +52,12 @@ function getBrowserTheme () {
 function print (content) {
     console.log(content);
 }
-function processFolder (folderPath) {
-    let rawFolder = fetch(folderPath).then((response) => response.text()).then((text) => {return text.split(/\r?\n|\r|\n/g)});
+// function processFolder (folderPath) {
+//     let rawFolder = fetch(folderPath).then((response) => response.text()).then((text) => {return text.split(/\r?\n|\r|\n/g)});
     
-    let xhttp = new XMLHttpRequest();
-    xhttp.open('GET', folderPath, true);
-}
+//     let xhttp = new XMLHttpRequest();
+//     xhttp.open('GET', folderPath, true);
+// }
 
 function appendAtoB (elementA, elementB) {
     elementB.appendChild(elementA);
