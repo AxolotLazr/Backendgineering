@@ -15,6 +15,11 @@
 
     color: var(--glow0);
     font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+
+    transition: all 0.2s ease-in-out, border-radius 0.2s ease-in-out 0.2s, box-shadow 0.2s ease-in-out 0.2s;
+}
+* {
+    transition: inherit;
 }
 body {
     position: fixed;
@@ -65,7 +70,6 @@ body {
     }
 }
 #versport {
-    display: flex;
     align-items: center;
     place-content: center;
 
@@ -76,13 +80,10 @@ body {
     font-size: large;
 }
 
-#testLayering {
-    margin: calc(3*var(--wayOutGap));
-}
-
 .window {
+    display: flex;
     z-index: 1;
-    order: 1;
+    flex-grow: 1;
 
     position: absolute;
     left: 0px;
@@ -93,7 +94,7 @@ body {
 
     border-radius: var(--wayOutborderRadius);
 
-    transition: all 0.2s ease-in-out;
+    transition: inherit;
 }
 .glass {
     background-color: var(--background2P);
@@ -104,12 +105,16 @@ body {
 
     backdrop-filter: brightness(120%) contrast(110%) blur(2vmin);
 
-    box-shadow: 0px var(--drop) var(--blur) var(--shadow1P);
+    box-shadow: inset 0px 0px var(--blur) var(--shadow1P),
+                0px var(--drop) var(--blur) var(--shadow0P);
 }
 .glow {
     border-style: solid;
     border-width: var(--wayOutBorderWidth);
     border-color: var(--glow1);
     
-    box-shadow: inset 0px 0px var(--wayOutBlurSmall) var(--glow2), 0px 0px var(--wayOutBlurSmall) var(--glow2), inset 0px 0px var(--wayOutBlurLarge) var(--glow3), 0px 0px var(--wayOutBlurLarge) var(--glow3);
+    box-shadow: inset 0px 0px var(--wayOutBlurSmall) var(--glow2),
+                inset 0px 0px var(--wayOutBlurLarge) var(--glow3),
+                0px 0px var(--wayOutBlurSmall) var(--glow2),
+                0px 0px var(--wayOutBlurLarge) var(--glow3);
 }

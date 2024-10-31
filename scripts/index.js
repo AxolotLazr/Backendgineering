@@ -1,3 +1,4 @@
+// handling variables
 let windowHolder = document.getElementById('viewSpaceHolder');
 print('Got windowHolder');
 let viewport = document.getElementById('viewport');
@@ -8,10 +9,13 @@ let AGUIport = document.getElementById('AGUIport');
 print('Got AGUIport')
 let versport = document.getElementById('versport');
 print('Got versport')
+let windows = document.getElementsByClassName('window');
+print('Got windows')
 
-let windows = [];
-print('Made "windows" variable');
+let windowArray = [];
+print('Made "windowArray" variable');
 
+// the MEAT
 document.getElementById('versionDisplay').innerText = '~V'+currentVersion;
 print('Set the version display')
 
@@ -20,17 +24,34 @@ assignWindow(infoport, 1, 0, false);
 assignWindow(AGUIport, 0, 1, false);
 assignWindow(versport, 1, 1, false);
 
-
 updateWindows();
 
+windowClassesAdd('glow');
+
 // useful functions
+function windowClasses(items) {
+    for (i = 0; i < windows.length; i++) {
+        windows[i].classList = items;
+    }
+}
+function windowClassesAdd(item) {
+    for (i = 0; i < windows.length; i++) {
+        windows[i].classList.add(item);
+    }
+}
+function windowClassesRemove(item) {
+    for (i = 0; i < windows.length; i++) {
+        windows[i].classList.remove(item);
+    }
+}
+
 function assignWindow(object, collumn, row, open) {
     // set open class
     object.classList.remove("open");
     if(open){object.classList.add("open")};
     
     // add window to array
-    windows.push([object, collumn, row, open]);
+    windowArray.push([object, collumn, row, open]);
 
     // closing log
     print('Assigned ' + object.id + ' window to (' + collumn + ', ' + row + ')');
@@ -46,16 +67,16 @@ function updateWindows() {
     let rowsOpen = [];
 
     // define col/row arrays
-    for (i = 0; i < windows.length; i++) {
-        collumnsUsed.push(windows[i][1]);
-        if (windows[i][3]){
-            collumnsOpen.push(windows[i][1]);
+    for (i = 0; i < windowArray.length; i++) {
+        collumnsUsed.push(windowArray[i][1]);
+        if (windowArray[i][3]){
+            collumnsOpen.push(windowArray[i][1]);
         }
     }
-    for (i = 0; i < windows.length; i++) {
-        rowsUsed.push(windows[i][2]);
-        if (windows[i][3]){
-            rowsOpen.push(windows[i][2]);
+    for (i = 0; i < windowArray.length; i++) {
+        rowsUsed.push(windowArray[i][2]);
+        if (windowArray[i][3]){
+            rowsOpen.push(windowArray[i][2]);
         }
     }
 
@@ -64,7 +85,7 @@ function updateWindows() {
     let minRow = Math.min.apply(Math, rowsUsed);
 
     // adjust col/row arrays to 0
-    for (i = 0; i < windows.length; i++) {
+    for (i = 0; i < windowArray.length; i++) {
         collumnsUsed[i] = collumnsUsed[i] - minCollumn;
         rowsUsed[i] = rowsUsed[i] - minRow;
     }
@@ -96,10 +117,10 @@ function updateWindows() {
         windowHolder.appendChild(newRow);
     }
 
-    // append windows to rows
-    for (i = 0; i < windows.length; i++) {
-        document.getElementsByClassName('row')[rowsUsed[i]].getElementsByClassName('collumn')[collumnsUsed[i]].appendChild(windows[i][0]);
-        // print('Appended ' + windows[i][0].id + ' to window(' + collumnsUsed[i] + ', ' + collumnsUsed[i] + ')');
+    // append windows to col/rows
+    for (i = 0; i < windowArray.length; i++) {
+        document.getElementsByClassName('row')[rowsUsed[i]].getElementsByClassName('collumn')[collumnsUsed[i]].appendChild(windowArray[i][0]);
+        // print('Appended ' + windowArray[i][0].id + ' to window(' + collumnsUsed[i] + ', ' + collumnsUsed[i] + ')');
     }
 
     // closing log
