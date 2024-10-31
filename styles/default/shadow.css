@@ -1,4 +1,6 @@
 :root {
+    --shadow0: rgb(4,0,8);
+
     --shadow0P: rgb(8,0,12,0.33);
     --shadow1P: rgb(8,0,12,0.2);
 }

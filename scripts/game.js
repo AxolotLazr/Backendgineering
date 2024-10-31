@@ -1,13 +1,13 @@
 let root = document.querySelector(':root');
-print('Got root')
+log('Got root')
 let body = document.querySelector('body');
-print('Got body')
+log('Got body')
 
 // browser theme
 let browser = getBrowser();
-console.log('Browser Prediction: ' + browser);
+log('Browser Prediction: ' + browser);
 let browserTheme = getBrowserTheme();
-console.log('Browser Theme Prediction: ' + browserTheme);
+log('Browser Theme Prediction: ' + browserTheme);
 
 // version
 let currentVersion = '0.0.3';
@@ -17,10 +17,12 @@ console.log('App version estimation: ' + currentVersion);
 let liquidLoss = gall_to_M3(1000000000000)/4000000000000;
 console.log('Liquid loss: ' + liquidLoss);
 
-print(processFolder("resources"));
+// log(processFolder("resources"));
 
 // GUA functions
-function createMachine() {}
+function createMachine() {
+
+}
 
 // specific functions
 function getBrowser () {
@@ -49,8 +51,16 @@ function getBrowserTheme () {
 }
 
 // incredibly useful functions
-function print (content) {
+function log (content) {
     console.log(content);
+}
+
+function css_set(variable, value, hide) {
+    root.style.setProperty(variable, value);
+    if(hide != true){log('Set ' + variable + ' to ' + value);}
+}
+function css_get(variable) {
+    return(getComputedStyle(root).getPropertyValue(variable));
 }
 // function processFolder (folderPath) {
 //     let rawFolder = fetch(folderPath).then((response) => response.text()).then((text) => {return text.split(/\r?\n|\r|\n/g)});

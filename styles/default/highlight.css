@@ -1,4 +1,10 @@
 :root {
-    --highlight0P: rgb(255,255,255,0.15);
+    --highlight0: rgb(176,160,192);
+
+    --highlight0D: rgb(255,192,192);
+
+    --highlight0P: rgb(255,255,255,0.2);
     --highlight1P: rgb(255,255,255,0.1);
+
+    --highlight0DP: rgb(255,192,192,33%);
 }
