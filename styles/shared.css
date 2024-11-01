@@ -11,8 +11,10 @@
     --borderRadius1: 16px;
     --borderRadius2: 8px;
 
-    --mh: 0px;
-    --mv: 0px;
+    --mh: 0;
+    --mv: 0;
+    --mhr: 0;
+    --mvr: 0;
 
     /* way out */
     --wayOutGap: 6vmin;
@@ -83,11 +85,10 @@ body {
     right: 0px;
     top: 0px;
     bottom: 0px;
-    background-color: var(--background0P);
 
     padding: var(--wayOutGap);
 
-    backdrop-filter: brightness(200%) contrast(120%) saturate(100%) blur(1vmin);
+    backdrop-filter: blur(1vmin);
 }
 #windowUIHolder {
     display: flex;
@@ -107,8 +108,8 @@ body {
         cursor: grab;
 
         border-radius: var(--borderRadius1);
-        &:active {
-            cursor: grabbing;
+        &.locked {
+            cursor: not-allowed;
         }
     }
 }
@@ -138,31 +139,57 @@ body {
 }
 
 #windowPreview {
+    z-index: 100;
     pointer-events: none;
 
+    cursor: grabbing;
+
     position: fixed;
+    left: var(--mh);
+    top: var(--mv);
 
     transition: none;
     * {
+        position: absolute;
+        top: 0px;
+        left: -50vmax;
+        width: 100vmax;
+        height: 0px;
+
         border-radius: var(--borderRadius1);
+
+        box-shadow: 0px 0px 0px 0px var(--shadow0P);
+
+        opacity: 0;
+
+        transition: all 0.2s ease-in-out, height 0.2s ease-out 0.1s, top 0.2s ease-out 0.1s;
     }
-    &:has(.full) {
-        left: calc(var(--mh) - var(--wayOutGap));
-        top: calc(var(--mv) - var(--wayOutGap));
-        width: calc(2*var(--wayOutGap));
-        height: calc(2*var(--wayOutGap));
-    }
-    &:has(.horizontal) {
-        left: calc(var(--mh) - var(--wayOutGap));
-        top: calc(var(--mv) - var(--wayOutGap)/2);
-        width: calc(2*var(--wayOutGap));
-        height: var(--wayOutGap);
-    }
-    &:has(.vertical) {
-        left: calc(var(--mh) - var(--wayOutGap)/2);
-        top: calc(var(--mv) - var(--wayOutGap));
-        width: var(--wayOutGap);
-        height: calc(2*var(--wayOutGap));
+    &.holding {
+        pointer-events: all;
+
+        * {
+            box-shadow: 0px var(--drop) var(--blur) var(--grow) var(--shadow0P);
+           
+            opacity: 1;
+        }
+        .full {
+            left: calc(-1*var(--wayOutGap));
+            top: calc(-1*var(--wayOutGap));
+            width: calc(2*var(--wayOutGap));
+            height: calc(2*var(--wayOutGap));
+        }
+        .horizontal {
+            left: calc(-1*var(--wayOutGap));
+            top: calc(-0.5*var(--wayOutGap));
+            width: calc(2*var(--wayOutGap));
+            height: var(--wayOutGap);
+        }
+        .vertical {
+            left: calc(var(--wayOutGap)/-2);
+            top: calc(-1*var(--wayOutGap));
+            width: var(--wayOutGap);
+            height: calc(2*var(--wayOutGap));
+        }
     }
 }
 
@@ -189,9 +216,8 @@ body {
     border-width: 1px;
     border-color: var(--highlight0P);
 
-    backdrop-filter: brightness(260%) contrast(180%) saturate(75%) blur(2vmin);
+    backdrop-filter: blur(1vmin);
 
-    opacity: 0.8;
     &.locked {
         background-color: var(--glass1DP);
     }

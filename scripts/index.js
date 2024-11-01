@@ -11,6 +11,8 @@ let versport = document.getElementById('versport');
 log('Got versport')
 let windowUIHolder = document.getElementById('windowUIHolder');
 log('Got windowUIHolder')
+let windowPreview = document.getElementById('windowPreview');
+log('Got windowPreview')
 
 let windows = [];
 log('Made "windows" variable');
@@ -44,6 +46,8 @@ function assignWindow(object, collumn, row, open) {
     log('Assigned ' + object.id + ' window to (' + collumn + ', ' + row + ')');
 }
 
+windowPreview.onmousedown = function(){previewWindowPlace()};
+
 // specific functions
 function windowClasses(items) {
     for (i = 0; i < windows.length; i++) {
@@ -62,14 +66,21 @@ function windowClassesRemove(item) {
 }
 
 // function windowPreview() {}
-function windowPreview(source) {
+function previewWindow(source) {
+    if (!Array.from(source.classList).includes('locked')) {
+        windowPreview.classList.add('holding');
+        windowPreview.firstChild.classList = source.classList;
+        windowPreview.firstChild.classList.remove('collumn');
+        windowPreview.firstChild.classList.remove('inset');
+    }
+}
+function previewWindowPlace(source) {
     let windowPreview = document.getElementById('windowPreview');
-    windowPreview.innerHTML = '';
-    windowPreview.appendChild(source.cloneNode(true));
+        windowPreview.classList.remove('holding');
 }
 function updateMouse(event) {
-    css_set('--mh', event.clientX + 'px', true);
-    css_set('--mv', event.clientY + 'px', true);
+    css_set('--mh', (event.clientX/window.innerWidth)*100 + '%', true);
+    css_set('--mv', (event.clientY/window.innerHeight)*100 + '%', true);
 }
 
 function updateWindows() {
@@ -194,7 +205,7 @@ function updateWindowUI() {
             let newCollumn = document.createElement('span');
             newCollumn.classList = 'collumn glass inset';
 
-            newCollumn.onmousedown = function(){windowPreview(this)};
+            newCollumn.onmousedown = function(){previewWindow(this)};
 
             if(collumnsOpen.includes(i2)){newCollumn.style.flexGrow = 1;}
 
