@@ -17,7 +17,7 @@ console.log('App version estimation: ' + currentVersion);
 let liquidLoss = gall_to_M3(1000000000000)/4000000000000;
 console.log('Liquid loss: ' + liquidLoss);
 
-// log(processFolder("resources"));
+log(processFolder("resources"));
 
 // GUA functions
 function createMachine() {
@@ -62,12 +62,27 @@ function css_set(variable, value, hide) {
 function css_get(variable) {
     return(getComputedStyle(root).getPropertyValue(variable));
 }
-// function processFolder (folderPath) {
-//     let rawFolder = fetch(folderPath).then((response) => response.text()).then((text) => {return text.split(/\r?\n|\r|\n/g)});
+
+function processFolder (folderPath) {
+    // let rawFolder = fetch(folderPath).then((response) => response.text()).then((text) => {return text.split(/\r?\n|\r|\n/g)});
     
-//     let xhttp = new XMLHttpRequest();
-//     xhttp.open('GET', folderPath, true);
-// }
+    // let xhttp = new XMLHttpRequest();
+    // xhttp.open('GET', folderPath, true);
+
+    const reader = new FileReader();
+
+    reader.addEventListener(
+        "load",
+        () => {
+            // this will then display a text file
+            log(reader.result);
+        },
+        false,
+    );
+
+    reader.readAsText(document.querySelector(folderPath));
+
+}
 
 function appendAtoB (elementA, elementB) {
     elementB.appendChild(elementA);

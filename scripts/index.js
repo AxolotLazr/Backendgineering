@@ -46,7 +46,7 @@ function assignWindow(object, collumn, row, open) {
     log('Assigned ' + object.id + ' window to (' + collumn + ', ' + row + ')');
 }
 
-windowPreview.onmousedown = function(){previewWindowPlace()};
+windowPreview.onmouseup = function(){previewWindowPlace()};
 
 // specific functions
 function windowClasses(items) {
@@ -72,11 +72,17 @@ function previewWindow(source) {
         windowPreview.firstChild.classList = source.classList;
         windowPreview.firstChild.classList.remove('collumn');
         windowPreview.firstChild.classList.remove('inset');
+        windowPreview.firstChild.classList.add('above');
     }
+    source.classList.add('held');
+    source.classList.add('empty');
 }
 function previewWindowPlace(source) {
     let windowPreview = document.getElementById('windowPreview');
-        windowPreview.classList.remove('holding');
+    windowPreview.classList.remove('holding');
+
+    document.getElementsByClassName('held')[0].classList.remove('empty');
+    document.getElementsByClassName('held')[0].classList.remove('held');
 }
 function updateMouse(event) {
     css_set('--mh', (event.clientX/window.innerWidth)*100 + '%', true);
@@ -182,12 +188,12 @@ function updateWindowUI() {
 
     // adjust col/row arrays to 0
     for (i = 0; i < windows.length; i++) {
-        collumnsUsed[i] = collumnsUsed[i] - minCollumn;
-        rowsUsed[i] = rowsUsed[i] - minRow;
+        collumnsUsed[i] = (collumnsUsed[i] - minCollumn) + 1;
+        rowsUsed[i] = (rowsUsed[i] - minRow) + 1;
     }
     for (i = 0; i < rowsOpen.length; i++) {
-        collumnsOpen[i] = collumnsOpen[i] - minCollumn;
-        rowsOpen[i] = rowsOpen[i] - minRow;
+        collumnsOpen[i] = (collumnsOpen[i] - minCollumn) + 1;
+        rowsOpen[i] = (rowsOpen[i] - minRow) + 1;
     }
 
     // set max col/row arrays
@@ -195,19 +201,24 @@ function updateWindowUI() {
     let maxRow = Math.max.apply(Math, rowsUsed);
 
     // create col/row divs
-    for (i = 0; i <= maxRow; i++) {
+    for (i = 0; i <= maxRow + 1; i++) {
         let newRow = document.createElement('span');
         newRow.classList = 'row';
 
         if(rowsOpen.includes(i)){newRow.style.flexGrow = 1;}
 
-        for (i2 = 0; i2 <= maxCollumn; i2++) {
+        for (i2 = 0; i2 <= maxCollumn + 1; i2++) {
             let newCollumn = document.createElement('span');
             newCollumn.classList = 'collumn glass inset';
 
             newCollumn.onmousedown = function(){previewWindow(this)};
 
-            if(collumnsOpen.includes(i2)){newCollumn.style.flexGrow = 1;}
+            if(collumnsOpen.includes(i2)){
+                newCollumn.style.flexGrow = 2;
+            }
+            if(i2 == maxCollumn + 1 || i2 == 0 || i == maxRow + 1 || i == 0) {
+                newCollumn.classList.add('empty');
+            }
 
             newRow.appendChild(newCollumn);
         }
@@ -217,7 +228,8 @@ function updateWindowUI() {
 
     // assign classes to col/rows in windowUI
     for (i = 0; i < windows.length; i++) {
-        windowUIHolder.getElementsByClassName('row')[rowsUsed[i]].getElementsByClassName('collumn')[collumnsUsed[i]].classList.add(windows[i][0].classList[1]);
+        windowUIHolder.getElementsByClassName('row')[rowsUsed[i]].getElementsByClassName('collumn')[collumnsUsed[i]].classList += ' '+(windows[i][0].classList);
+        windowUIHolder.getElementsByClassName('row')[rowsUsed[i]].getElementsByClassName('collumn')[collumnsUsed[i]].classList.remove('window');
     }
 
     // closing log
