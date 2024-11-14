@@ -27,7 +27,7 @@ assignWindow(AGUIport, 0, 1, false);
 assignWindow(versport, 1, 1, false);
 
 updateWindows();
-updateWindowUI();
+// updateWindowUI();
 
 windowClassesAdd('glow');
 
@@ -46,7 +46,7 @@ function assignWindow(object, collumn, row, open) {
     log('Assigned ' + object.id + ' window to (' + collumn + ', ' + row + ')');
 }
 
-windowPreview.onmouseup = function(){previewWindowPlace()};
+// windowPreview.onmouseup = function(){previewWindowPlace()};
 
 // specific functions
 function windowClasses(items) {

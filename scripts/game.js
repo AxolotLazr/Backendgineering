@@ -17,7 +17,7 @@ console.log('App version estimation: ' + currentVersion);
 let liquidLoss = gall_to_M3(1000000000000)/4000000000000;
 console.log('Liquid loss: ' + liquidLoss);
 
-log(processFolder("resources"));
+log(readResourceFile(getFolderDescenentFiles('../resources')[0]));
 
 // GUA functions
 function createMachine() {
@@ -55,33 +55,72 @@ function log (content) {
     console.log(content);
 }
 
-function css_set(variable, value, hide) {
+function css_set (variable, value, hide) {
     root.style.setProperty(variable, value);
     if(hide != true){log('Set ' + variable + ' to ' + value);}
 }
-function css_get(variable) {
+function css_get (variable) {
     return(getComputedStyle(root).getPropertyValue(variable));
 }
 
-function processFolder (folderPath) {
-    // let rawFolder = fetch(folderPath).then((response) => response.text()).then((text) => {return text.split(/\r?\n|\r|\n/g)});
+function getFolderChildren (folderPath) {
+    let xhttp = new XMLHttpRequest();
+
+    xhttp.open('GET', folderPath, false);
+    xhttp.send();
+
+    let folder = xhttp.responseText;
+    let folderLines = folder.split(/\r?\n|\r|\n/g);
+    let usefulLines = [];
+    for (i = 0; i < folderLines.length; i++){
+        if (folderLines[i].includes('<a href="\\')){
+            usefulLines.push(folderLines[i])
+        }
+    }
+    let folderContents = [];
+    for (i = 0; i < usefulLines.length; i++){
+        folderContents.push(usefulLines[i].split('"')[1].replaceAll('\\','/').replace('/','../'));
+    }
+
+    return folderContents;
+}
+function getFolderDescenents (folderPath, filter = 'none') {
+    let folderContents = getFolderChildren(folderPath);
     
-    // let xhttp = new XMLHttpRequest();
-    // xhttp.open('GET', folderPath, true);
+    for (i = 0; i < folderContents.length; i++){
+        if (folderContents[i][folderContents[i].length - 1] == '/'){
+            let firstDescendents = getFolderChildren(folderContents[i]);
+            for (i2 = 0; i2 < firstDescendents.length; i2++) {
+                folderContents.push(firstDescendents[i2]);
+            }
+        }
+    }
 
-    const reader = new FileReader();
+    return folderContents;
+}
+function getFolderDescenentFiles (folderPath) {
+    let allDescendents = getFolderDescenents(folderPath);
+    let files = [];
 
-    reader.addEventListener(
-        "load",
-        () => {
-            // this will then display a text file
-            log(reader.result);
-        },
-        false,
-    );
+    allDescendents.forEach(i => {if (i[i.length - 1] != '/'){
+            files.push(i);            
+        }
+    });
 
-    reader.readAsText(document.querySelector(folderPath));
+    return files;
+}
+function readResourceFile (filePath) {
+    let xhttp = new XMLHttpRequest();
 
+    xhttp.open('GET', filePath, false);
+    xhttp.send();
+
+    let file = xhttp.responseText;
+    log(file)
+
+    file = file.replaceAll(/\r?\n|\r/g, '').replaceAll('    ', '');
+    let fileChunks = file.split(/\r?\!|\;/);
+    return fileChunks;
 }
 
 function appendAtoB (elementA, elementB) {
