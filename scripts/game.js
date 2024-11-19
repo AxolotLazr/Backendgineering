@@ -18,7 +18,7 @@ let liquidLoss = gall_to_M3(1000000000000)/4000000000000;
 console.log('Liquid loss: ' + liquidLoss);
 
 getFolderDescenentFiles('../resources').forEach(file => {
-    log(readResourceFile(file));
+    log(parseGMFFile(file));
 });
 
 // GUA functions
@@ -113,11 +113,11 @@ function getFolderDescenentFiles (folderPath) {
 
     return files;
 }
-function readResourceFile (filePath) {
+function parseGMFFile (path) {
     let xhttp = new XMLHttpRequest();
     let readObj = [];
 
-    xhttp.open('GET', filePath, false);
+    xhttp.open('GET', path, false);
     xhttp.send();
 
     let file = xhttp.responseText;
@@ -133,6 +133,11 @@ function readResourceFile (filePath) {
             chunk = chunk.replace(']', '').split('[');
         } else {
             chunk = chunk.replace(')', '').split('(');
+        }
+
+        if (chunk[1].includes(',')) {
+            chunk[1] = chunk[1].replaceAll(' ', '').split(',');
+            // chunk[1] = chunk[1].replace(')', '').split('(');
         }
 
 
