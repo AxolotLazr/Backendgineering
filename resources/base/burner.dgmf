@@ -5,7 +5,7 @@ daisy chain(false);
 efficiancy(0.8);
 intake[
     connection(belt),
-    type(flammable),
+    itemclass(flammable),
     i/m(30),
     internal storage(100)
 ];

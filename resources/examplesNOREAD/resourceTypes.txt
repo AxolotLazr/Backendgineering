@@ -1,0 +1,7 @@
+Resource type must be in all caps and directly followed by an exclimation mark.
+
+List of default resource types:
+1. MACHINE
+- A general framework for an object that takes in and or outputs something.
+2. COMPONENT
+- A general framework for an object used in a crafting process such as coal, iron, or water.

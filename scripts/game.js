@@ -17,7 +17,9 @@ console.log('App version estimation: ' + currentVersion);
 let liquidLoss = gall_to_M3(1000000000000)/4000000000000;
 console.log('Liquid loss: ' + liquidLoss);
 
-log(readResourceFile(getFolderDescenentFiles('../resources')[0]));
+getFolderDescenentFiles('../resources').forEach(file => {
+    log(readResourceFile(file));
+});
 
 // GUA functions
 function createMachine() {
@@ -79,7 +81,9 @@ function getFolderChildren (folderPath) {
     }
     let folderContents = [];
     for (i = 0; i < usefulLines.length; i++){
-        folderContents.push(usefulLines[i].split('"')[1].replaceAll('\\','/').replace('/','../'));
+        if (!usefulLines[i].split('"')[1].replaceAll('\\','/').replace('/','../').includes('NOREAD')) {
+            folderContents.push(usefulLines[i].split('"')[1].replaceAll('\\','/').replace('/','../'));
+        }
     }
 
     return folderContents;
@@ -111,16 +115,31 @@ function getFolderDescenentFiles (folderPath) {
 }
 function readResourceFile (filePath) {
     let xhttp = new XMLHttpRequest();
+    let readObj = [];
 
     xhttp.open('GET', filePath, false);
     xhttp.send();
 
     let file = xhttp.responseText;
-    log(file)
 
     file = file.replaceAll(/\r?\n|\r/g, '').replaceAll('    ', '');
-    let fileChunks = file.split(/\r?\!|\;/);
-    return fileChunks;
+    let fileChunks = file.split('!');
+    readObj.push(fileChunks[0]);
+
+    fileChunks = fileChunks[1].split(';');
+
+    fileChunks.forEach(chunk => {
+        if (chunk.includes('[')) {
+            chunk = chunk.replace(']', '').split('[');
+        } else {
+            chunk = chunk.replace(')', '').split('(');
+        }
+
+
+        readObj.push(chunk);
+    })
+
+    return readObj;
 }
 
 function appendAtoB (elementA, elementB) {

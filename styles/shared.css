@@ -104,6 +104,7 @@ body {
     padding: var(--wayOutGap);
 
     backdrop-filter: blur(1vmin);
+    -webkit-backdrop-filter: blur(1vmin);
     &.active {
         visibility: visible;
     }
@@ -283,6 +284,7 @@ body {
     border-color: var(--highlight0P);
 
     backdrop-filter: blur(1vmin);
+    -webkit-backdrop-filter: blur(1vmin);
 
     &.locked {
         background-color: var(--glass1DP);
