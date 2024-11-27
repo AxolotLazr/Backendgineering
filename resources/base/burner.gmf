@@ -1,19 +1,19 @@
 MACHINE!
-name(T1 Burner);
-class(burner, t1);
-daisy chain(false);
-efficiancy(0.8);
-intake[
-    connection(belt),
-    itemclass(flammable),
-    i/m(30),
-    internal storage(100)
+name = Burner;
+class = (burner, t1);
+daisy = false;
+efficiancy = 0.8;
+intake = [
+    connection = belt,
+    items = flammable,
+    i/m = 30,
+    storage = 100
 ];
-output[
-    connection(wire),
-    internal storage(0)
+output += [
+    connection = wire,
+    storage = 0
 ];
-output[
-    connection(vent),
-    internal storage(0)
-]
+output += [
+    connection = vent,
+    storage = 1
+];

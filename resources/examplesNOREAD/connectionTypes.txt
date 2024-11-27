@@ -1,0 +1,19 @@
+Conection types
+
+
+1. belt
+- for solid items
+- connects to belts
+2. wire
+- for electricity
+3. vent
+- only output
+- for gasses
+- default: open; can be manually closed
+4. chute
+- for solids or gasses
+- can dump out on belts or be dumped into from belts
+5. valve
+- for liquids or gasses
+- connects to pipes
+- automatic, manual

@@ -46,7 +46,7 @@ function assignWindow(object, collumn, row, open) {
     log('Assigned ' + object.id + ' window to (' + collumn + ', ' + row + ')');
 }
 
-// windowPreview.onmouseup = function(){previewWindowPlace()};
+log('Load time: ' + (new Date().getTime() - loadStart) + 'ms');
 
 // specific functions
 function windowClasses(items) {

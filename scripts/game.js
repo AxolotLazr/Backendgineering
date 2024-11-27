@@ -1,7 +1,108 @@
+let loadStart = new Date().getTime();
+
 let root = document.querySelector(':root');
 log('Got root')
 let body = document.querySelector('body');
 log('Got body')
+
+// Generalized Modding Format
+let GMF = [];
+GMF.separators = ['!', ';', ',', '(', ')', '[', ']', '='];
+GMF.separators.regex = arrayToRegEx(['!', ';', ',', '\\(', '\\)', '\\[', '\\]', '=']);
+GMF.openers = ['(', '['];
+GMF.closers = [')', ']'];
+GMF.continuers = [','];
+// GMF functions
+GMF.processFile = function (path) {
+    let xhttp = new XMLHttpRequest();
+    let readObj = [];
+    
+    xhttp.open('GET', path, false);
+    xhttp.send();
+
+    let file = xhttp.responseText;
+
+    file = file.replaceAll(/\r?\n|\r/g, '').replaceAll(' ', '');
+
+    // get resource type
+    readObj.type = file.split('!')[0];
+    file = file.split('!')[1].split(';');
+
+    // construct resource data tree
+    file.forEach(item => {
+        // complex atributes
+        if (item.includes('[')) {
+            // complex atribute arrays
+            if (item.includes('+')) {
+                if (readObj[item.split('+=[')[0]] == null) {
+                    readObj[item.split('+=[')[0]] = [];
+                }
+                readObj[item.split('+=[')[0]].push([]);
+                
+                item.replace(']', '').split('+=[')[1].split(',').forEach(item2 => {
+                    if (item2.includes('{')) {
+                        if (readObj[item.split('+=[')[0]][readObj[item.split('+=[')[0]].length - 1][item2.split('={')[0]] == null) {
+                            readObj[item.split('+=[')[0]][readObj[item.split('+=[')[0]].length - 1][item2.split('={')[0]] = [];
+                        }
+                        readObj[item.split('+=[')[0]][readObj[item.split('+=[')[0]].length - 1][item2.split('={')[0]][item2.split('={')[1].split('=')[0]] = item2.replace('}', '').split('={')[1].split('=')[1];
+                    } else if (item2.includes('(')) {
+                        readObj[item.split('+=[')[0]][readObj[item.split('+=[')[0]].length - 1][item2.split('=(')[0]] = item2.replace(')', '').split('=(')[1].split(',')
+                    } else {
+                        readObj[item.split('+=[')[0]][readObj[item.split('+=[')[0]].length - 1][item2.split('=')[0]] = item2.split('=')[1];
+                    };
+                });
+            }
+            // normal complex atributes
+            else {
+                readObj[item.split('=[')[0]] = [];
+            
+                item.replace(']', '').split('=[')[1].split(',').forEach(item2 => {
+                    // complex inner-atributes
+                    if (item2.includes('{')) {
+                        if (readObj[item.split('=[')[0]][item2.split('={')[0]] == null) {
+                            readObj[item.split('=[')[0]][item2.split('={')[0]] = [];
+                        }
+                        readObj[item.split('=[')[0]][item2.split('={')[0]][item2.split('={')[1].split('=')[0]] = item2.replace('}', '').split('={')[1].split('=')[1];
+                    }
+                    // list inner-atributes
+                    else if (item2.includes('(')) {
+                        readObj[item.split('=[')[0]][item2.split('=(')[0]] = item2.replace(')', '').split('=(')[1].split(',')
+                    }
+                    // basic inner-atributes
+                    else {
+                        readObj[item.split('=[')[0]][item2.split('=')[0]] = item2.split('=')[1];
+                    };
+                });
+            };
+
+        }
+        // list atributes
+        else if (item.includes('(')) {
+            readObj[item.split('=(')[0]] = item.replace(')', '').split('=(')[1].split(',')
+        
+        }
+        // basic atributes
+        else if (item.includes('=')) {
+            readObj[item.split('=')[0]] = item.split('=')[1];
+        };
+    });
+
+    return readObj;
+};
+GMF.storeRsrc = function (resource) {
+    if (GMF.resources == null) {
+        GMF.resources = [];
+    }
+    GMF.resources.push(resource);
+
+    return GMF.resources;
+};
+GMF.loadResources = function () {
+    getFolderDescenentFiles('../resources').forEach(file => {
+        GMF.storeRsrc(GMF.processFile(file));
+    });
+}
+
 
 // browser theme
 let browser = getBrowser();
@@ -17,14 +118,16 @@ console.log('App version estimation: ' + currentVersion);
 let liquidLoss = gall_to_M3(1000000000000)/4000000000000;
 console.log('Liquid loss: ' + liquidLoss);
 
-getFolderDescenentFiles('../resources').forEach(file => {
-    log(parseGMFFile(file));
-});
 
-// GUA functions
-function createMachine() {
+GMF.loadResources();
 
-}
+log(GMF.resources);
+
+
+// game user action functions
+function createMachine(name, coords, rotation) {
+
+};
 
 // specific functions
 function getBrowser () {
@@ -43,27 +146,27 @@ function getBrowser () {
     } else {
         return 'unknown';
     }
-}
+};
 function getBrowserTheme () {
     if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
         return 'dark';
     } else {
         return 'light';
     }
-}
+};
 
 // incredibly useful functions
 function log (content) {
     console.log(content);
-}
+};
 
 function css_set (variable, value, hide) {
     root.style.setProperty(variable, value);
     if(hide != true){log('Set ' + variable + ' to ' + value);}
-}
+};
 function css_get (variable) {
     return(getComputedStyle(root).getPropertyValue(variable));
-}
+};
 
 function getFolderChildren (folderPath) {
     let xhttp = new XMLHttpRequest();
@@ -87,7 +190,7 @@ function getFolderChildren (folderPath) {
     }
 
     return folderContents;
-}
+};
 function getFolderDescenents (folderPath, filter = 'none') {
     let folderContents = getFolderChildren(folderPath);
     
@@ -101,7 +204,7 @@ function getFolderDescenents (folderPath, filter = 'none') {
     }
 
     return folderContents;
-}
+};
 function getFolderDescenentFiles (folderPath) {
     let allDescendents = getFolderDescenents(folderPath);
     let files = [];
@@ -112,46 +215,20 @@ function getFolderDescenentFiles (folderPath) {
     });
 
     return files;
-}
-function parseGMFFile (path) {
-    let xhttp = new XMLHttpRequest();
-    let readObj = [];
-
-    xhttp.open('GET', path, false);
-    xhttp.send();
-
-    let file = xhttp.responseText;
-
-    file = file.replaceAll(/\r?\n|\r/g, '').replaceAll('    ', '');
-    let fileChunks = file.split('!');
-    readObj.push(fileChunks[0]);
-
-    fileChunks = fileChunks[1].split(';');
-
-    fileChunks.forEach(chunk => {
-        if (chunk.includes('[')) {
-            chunk = chunk.replace(']', '').split('[');
-        } else {
-            chunk = chunk.replace(')', '').split('(');
-        }
-
-        if (chunk[1].includes(',')) {
-            chunk[1] = chunk[1].replaceAll(' ', '').split(',');
-            // chunk[1] = chunk[1].replace(')', '').split('(');
-        }
-
-
-        readObj.push(chunk);
-    })
-
-    return readObj;
-}
+};
 
 function appendAtoB (elementA, elementB) {
     elementB.appendChild(elementA);
-}
+};
 
 // conversions
 function gall_to_M3 (input) {
     return(input/264.2)
+};
+function arrayToRegEx (input) {
+    if (Array.isArray(input)) {
+        return RegExp(input.join('|'), 'g')
+    } else {
+        return 'ERROR: Not an array';
+    };
 }

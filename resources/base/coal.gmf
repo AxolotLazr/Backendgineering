@@ -1,9 +1,9 @@
 COMPONENT!
-name(coal);
-class(flammable, solid);
-conversion[
-    name(burn),
-    intake(1),
-    output(Joule = 8671500000),
-    output(CO2 = 1.85353535354)
-]
+name = Coal;
+class = (flammable, solid);
+conversion = [
+    name = burn,
+    intake = 1,
+    output = {Joule = 8671500000},
+    output = {CO2 = 1.85353535354}
+];
