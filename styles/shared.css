@@ -24,6 +24,7 @@
     --borderRadius0: 32px;
     --borderRadius1: 16px;
     --borderRadius2: 8px;
+    --borderWidth: 1px;
 
     --mh: 0;
     --mv: 0;
@@ -40,9 +41,6 @@
     --wayOutBlurLarge: 5vmin;
 
     /* inherited */
-    color: var(--glow0);
-    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
-
     transition: all 0.2s ease-in-out,
                 border-radius 0.2s ease-in-out 0.1s,
                 box-shadow 0.2s ease-in-out 0.1s;

@@ -1,9 +1,9 @@
 let loadStart = new Date().getTime();
 
 let root = document.querySelector(':root');
-log('Got root')
+log('Got root');
 let body = document.querySelector('body');
-log('Got body')
+log('Got body');
 
 // Generalized Modding Format
 let GMF = [];

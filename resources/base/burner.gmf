@@ -3,6 +3,7 @@ name = Burner;
 class = (burner, t1);
 daisy = false;
 efficiancy = 0.8;
+speed = 1;
 intake = [
     connection = belt,
     items = flammable,

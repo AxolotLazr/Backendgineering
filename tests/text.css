@@ -1,0 +1,25 @@
+:root {
+    --textSizeBigger: 24px;
+    --textSizeBig: 20px;
+    --textSizeMid: 16px;
+    --textSizeSmall: 12px;
+
+    --textColor0: rgb(255,255,255);
+    --textColor1: rgb(192,192,192);
+
+    color: var(--textColor0);
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
+
+.title{
+    font-size: var(--textSizeBig);
+    font-weight: bold;
+
+    margin-left: var(--gap);
+}
+.text{
+    font-size: var(--textSizeMid);
+
+    margin-left: calc(var(--gap) * 2);
+    margin-right: var(--gap);
+}
