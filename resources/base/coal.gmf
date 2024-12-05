@@ -4,6 +4,6 @@ class = (flammable, solid);
 conversion = [
     name = burn,
     intake = 1,
-    output = {Joule = 8671500000},
-    output = {CO2 = 1.85353535354}
+    output = {WH = 120},
+    output = {CO2 = 2}
 ];
