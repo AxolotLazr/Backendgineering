@@ -10,6 +10,11 @@ intake = [
     i/m = 30,
     storage = 100
 ];
+hitbox += [
+    width = 3,
+    depth = 3,
+    height = 4
+];
 output += [
     connection = wire,
     storage = 0

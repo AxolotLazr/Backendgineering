@@ -17,6 +17,7 @@ GMF.separators.regex = arrayToRegEx(['!', ';', ',', '\\(', '\\)', '\\[', '\\]', 
 GMF.openers = ['(', '['];
 GMF.closers = [')', ']'];
 GMF.continuers = [','];
+
 // GMF functions
 GMF.processFile = function (path) {
     let xhttp = new XMLHttpRequest();
@@ -98,15 +99,44 @@ GMF.storeRsrc = function (resource) {
     if (GMF.resources == null) {
         GMF.resources = [];
     }
-    GMF.resources.push(resource);
+    GMF.resources[resource.name] = resource;
 
     return GMF.resources;
 };
 GMF.loadResources = function () {
-    getFolderDescenentFiles('../resources').forEach(file => {
+    getFolderDescenentFiles('resources').forEach(file => {
         GMF.storeRsrc(GMF.processFile(file));
     });
 }
+GMF.renderHitboxOf = function (resource) {
+    log(resource.hitbox);
+    if (resource.hitbox.length != 0) {
+        resource.hitbox.forEach(hitbox => {
+            let bottomHitSquare = document.createElement('div');
+            bottomHitSquare.style.border = 'solid';
+            bottomHitSquare.style.borderWidth = '1px';
+            bottomHitSquare.style.borderColor = 'rgb(255,255,0)';
+            bottomHitSquare.style.position = 'fixed';
+            bottomHitSquare.style.left = '50%';
+            bottomHitSquare.style.top = '50%';
+            bottomHitSquare.style.width = (hitbox.width * 16) + 'px';
+            bottomHitSquare.style.height = (hitbox.depth * 16) + 'px';
+            document.getElementById('gameWindow').appendChild(bottomHitSquare);
+
+            let leftHitSquare = document.createElement('div');
+            leftHitSquare.style.border = 'solid';
+            leftHitSquare.style.borderWidth = '1px';
+            leftHitSquare.style.borderColor = 'rgb(255,255,0)';
+            leftHitSquare.style.position = 'fixed';
+            leftHitSquare.style.left = 'calc(50% - ' + (hitbox.width * 6) + 'px)';
+            leftHitSquare.style.top = 'calc(50% - ' + (hitbox.height * 2) + 'px)';
+            leftHitSquare.style.width = (hitbox.height * 16) + 'px';
+            leftHitSquare.style.height = (hitbox.depth * 16) + 'px';
+            leftHitSquare.style.transform = 'skewY(-0.12turn) scaleX(0.23)';
+            document.getElementById('gameWindow').appendChild(leftHitSquare);
+        });
+    };
+};
 
 // browser theme
 let browser = getBrowser();
@@ -126,9 +156,14 @@ GMF.loadResources();
 
 log(GMF.resources);
 
+GMF.renderHitboxOf(GMF.resources.Burner);
+
 
 // game user action functions
-function createMachine(name, coords, rotation) {
+function tryToPlace () {
+
+};
+function createMachine (name, coords, rotation) {
 
 };
 
