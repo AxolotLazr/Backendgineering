@@ -235,7 +235,11 @@ function loadStyles (subFolder) {
 function getFolderChildren (folderPath) {
     let xhttp = new XMLHttpRequest();
 
-    xhttp.open('GET', folderPath, false);
+    if (window.location.hostname.includes('github.io')) {
+        xhttp.open('GET', window.location.hostname + '/backendgineering/' + folderPath, false);
+    } else {
+        xhttp.open('GET', folderPath, false);
+    }
     xhttp.send();
 
     let folder = xhttp.responseText;
