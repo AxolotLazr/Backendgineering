@@ -1,0 +1,24 @@
+@media (prefers-color-scheme: dark) {
+    :root {
+        --background0: rgb(255, 80, 0);
+        --background1: rgb(0,0,0);
+        --background2: rgb(31,31,31);
+        --background3: rgb(51,51,51);
+        --background4: rgb(51,51,51);
+        --background5: rgb(166,166,166);
+            
+        /* Progressive (transparent) */
+        --background0P: rgb(0,0,16,0.5);
+        --background2P: rgb(176,176,255,0.08);
+    }
+}
+@media (prefers-color-scheme: light) {
+    :root {
+        --background0: rgb(255,128,0);
+        --background1: rgb(255,255,255);
+        --background2: rgb(234,234,234);
+        --background3: rgb(244,244,244);
+        --background4: rgb(200,200,200);
+        --background5: rgb(33,33,33);
+    }
+}

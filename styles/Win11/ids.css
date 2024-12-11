@@ -1,0 +1,22 @@
+#gameWindow {
+    display: flex;
+    flex-direction: column;
+    > #viewport {
+        flex-grow: 1;
+    }
+    > .layer {
+        left: 0px;
+        right: 0px;
+        height: 128px;
+
+        border-radius: 0px 0px var(--borderRadius0) var(--borderRadius0);
+    }
+}
+
+#AGUIport {
+    position: absolute;
+    left: 0px;
+    right: 0px;
+    top: 0px;
+    bottom: 0px;
+}

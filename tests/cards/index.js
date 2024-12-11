@@ -43,11 +43,22 @@ card.newHand = function () {
 card.addToHand = function (obj, hand) {
     hand.appendChild(obj);
 
+    if (hand.children.length - 2 >= 60) {
+        for (i = 2; i < hand.children.length; i++) {
+            hand.children[i].innerHTML = '';
+        };
+    } else if (hand.children.length - 2 >= 33) {
+        for (i = 2; i < hand.children.length; i++) {
+            while (hand.children[i].children.length > 1) {
+                hand.children[i].removeChild(hand.children[i].firstChild);
+            }
+        };
+    }
     for (i = 0; i < hand.children.length; i++) {
         hand.children[i].style.transform = 'rotate(' + (30/hand.children.length) * (i - 1 - hand.children.length/8) + 'deg) translate(' + (128/hand.children.length) * (i - 1 - hand.children.length/8) + 'px, ' + (-32/hand.children.length) * (i - 1 - hand.children.length/8) + 'px)';
         hand.children[i].style.zIndex = hand.children.length - 1 * i;
     };
-    hand.getElementsByClassName('handCounter')[0].innerText = hand.children.length - 1;
+    hand.getElementsByClassName('handCounter')[0].innerText = 'Hand with ' + (hand.children.length - 1) + ' cards';
     hand.getElementsByClassName('handCounter')[0].style.transform = '';
 };
 

@@ -2,8 +2,13 @@ let loadStart = new Date().getTime();
 
 let root = document.querySelector(':root');
 log('Got root');
+let head = document.querySelector('head');
+log('Got head');
 let body = document.querySelector('body');
 log('Got body');
+
+let AGUIport = document.getElementById('AGUIport');
+log('Got AGUIport')
 
 // Generalized Modding Format
 let GMF = [];
@@ -103,7 +108,6 @@ GMF.loadResources = function () {
     });
 }
 
-
 // browser theme
 let browser = getBrowser();
 log('Browser Prediction: ' + browser);
@@ -111,12 +115,11 @@ let browserTheme = getBrowserTheme();
 log('Browser Theme Prediction: ' + browserTheme);
 
 // version
-let currentVersion = '0.0.3';
-console.log('App version estimation: ' + currentVersion);
+// let currentVersion = '0.0.3';
+// console.log('App version estimation: ' + currentVersion);
 
 // calculations
 let liquidLoss = gall_to_M3(1000000000000)/4000000000000;
-console.log('Liquid loss: ' + liquidLoss);
 
 
 GMF.loadResources();
@@ -159,6 +162,13 @@ function getBrowserTheme () {
 function log (content) {
     console.log(content);
 };
+function doneLoading () {
+    log('Load time: ' + (new Date().getTime() - loadStart) + 'ms');
+    document.getElementById('loadCover').style.opacity = '0';
+    document.getElementById('loadCover').style.pointerEvents = 'none';
+
+    body.style.transitionDuration = '0.2s';
+};
 
 function css_set (variable, value, hide) {
     root.style.setProperty(variable, value);
@@ -166,6 +176,25 @@ function css_set (variable, value, hide) {
 };
 function css_get (variable) {
     return(getComputedStyle(root).getPropertyValue(variable));
+};
+
+// files
+function loadStyles (subFolder) {
+    let styles = getFolderDescenentFiles('styles/' + subFolder);
+    styles.forEach(file => {
+        if (file.split('.')[file.split('.').length - 1] == 'css') {
+            let newStyleLink = document.createElement('link');
+            newStyleLink.id = 'style-' + file.split('/')[3].split('.')[0];
+            newStyleLink.rel = 'stylesheet';
+            newStyleLink.href = file;
+            head.appendChild(newStyleLink);
+        } else if (file.split('.')[file.split('.').length - 1] == 'js') {
+            let newStyleScript = document.createElement('script');
+            newStyleScript.id = 'styleScript-' + file.split('/')[3].split('.')[0];
+            newStyleScript.src = file;
+            body.appendChild(newStyleScript);
+        };
+    });
 };
 
 function getFolderChildren (folderPath) {

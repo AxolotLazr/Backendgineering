@@ -5,8 +5,6 @@ let viewport = document.getElementById('viewport');
 log('Got viewport')
 let infoport = document.getElementById('infoport');
 log('Got infoport')
-let AGUIport = document.getElementById('AGUIport');
-log('Got AGUIport')
 let versport = document.getElementById('versport');
 log('Got versport')
 let windowUIHolder = document.getElementById('windowUIHolder');
@@ -18,18 +16,8 @@ let windows = [];
 log('Made "windows" variable');
 
 // the MEAT
-document.getElementById('versionDisplay').innerText = '~V'+currentVersion;
-log('Set the version display')
 
-assignWindow(viewport, 0, 0, true);
-assignWindow(infoport, 1, 0, false);
-assignWindow(AGUIport, 0, 1, false);
-assignWindow(versport, 1, 1, false);
-
-updateWindows();
 // updateWindowUI();
-
-windowClassesAdd('glow');
 
 body.onmousemove = updateMouse;
 
@@ -46,7 +34,6 @@ function assignWindow(object, collumn, row, open) {
     log('Assigned ' + object.id + ' window to (' + collumn + ', ' + row + ')');
 }
 
-log('Load time: ' + (new Date().getTime() - loadStart) + 'ms');
 
 // specific functions
 function windowClasses(items) {

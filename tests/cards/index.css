@@ -83,7 +83,7 @@
 }
 .hand {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
 
     position: relative;
     width: var(--cardSize);
@@ -99,25 +99,24 @@
         top: 0px;
     }
     .handCounter {
-        text-align: center;
-        align-content: center;
-
+        display: flex;
         position: absolute;
-        left: 35%;
-        right: 35%;
-        top: calc(var(--cardSize) / -6);
-        height: calc(var(--cardSize) / 4);
-        background-image: radial-gradient(circle at bottom, var(--highlight1P) 0%, rgb(0,0,0,0));
+        
+        top: calc(var(--textSizeMid) * -2);
+        background-image: radial-gradient(circle at top, var(--highlight1P) 0%, rgb(0,0,0,0) 100%);
 
         border: solid;
         border-width: var(--borderWidth);
         border-top: none;
         border-color: var(--highlight0P);
         border-radius: var(--borderRadius1);
+
+        padding: var(--gap);
+        margin: 0px;
     }
 }
-.hand:not(:hover) .card {
+.hand:not(:hover) * {
     transform: none !important;
 
-    transition: transform 0.2s ease-in;
+    transition: all 0.2s ease-in;
 }

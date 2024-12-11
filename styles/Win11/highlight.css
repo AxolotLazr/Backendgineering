@@ -1,0 +1,10 @@
+@media (prefers-color-scheme: dark) {
+    :root {
+        --highlight1: rgb(128,128,128,0.28);
+    }
+}
+@media (prefers-color-scheme: light) {
+    :root {
+        --highlight1: rgb(128,128,128,0.28);
+    }
+}

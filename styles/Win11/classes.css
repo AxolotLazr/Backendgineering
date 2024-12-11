@@ -1,0 +1,22 @@
+.window {
+    --elevation: 128px;
+    --stroke: 1px;
+
+    overflow: hidden;
+
+    position: absolute;
+    left: 0px;
+    right: 0px;
+    top: 0px;
+    bottom: 0px;
+    background-color: var(--background1);
+
+    border-radius: var(--borderRadius0);
+}
+.layer {
+    --elevation: 1px;
+    --stroke: 1px;
+
+    position: relative;
+    background-color: var(--background2);
+}
