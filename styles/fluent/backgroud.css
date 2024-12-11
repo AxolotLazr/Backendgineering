@@ -2,10 +2,10 @@
     :root {
         --background0: rgb(255, 80, 0);
         --background1: rgb(0,0,0);
-        --background2: rgb(31,31,31);
+        --background1: rgb(32,32,32);
+        --background2: rgb(56,56,56);
         --background3: rgb(51,51,51);
-        --background4: rgb(51,51,51);
-        --background5: rgb(166,166,166);
+        --background4: rgb(166,166,166);
             
         /* Progressive (transparent) */
         --background0P: rgb(0,0,16,0.5);

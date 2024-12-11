@@ -1,0 +1,16 @@
+@media (prefers-color-scheme: dark) {
+    :root {
+        --shadow1: rgb(0,0,0,0.4);
+    }
+    .shadow {
+        box-shadow: 0px 0px 0px var(--stroke) var(--highlight1), 0px calc(0.5 * var(--elevation)) calc(1 * var(--elevation)) var(--shadow1);
+    }
+}
+@media (prefers-color-scheme: light) {
+    :root {
+        --shadow1: rgb(32,32,32,0.2);
+    }
+    .shadow {
+        box-shadow: 0px 0px 0px var(--stroke) var(--highlight1), 0px calc(0.5 * var(--elevation)) calc(0 * var(--elevation)) calc(0.5 * var(--elevation)) var(--shadow1);
+    }
+}
